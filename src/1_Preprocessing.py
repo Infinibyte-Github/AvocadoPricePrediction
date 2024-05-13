@@ -14,8 +14,14 @@ import pandas as pd
 df = pd.read_csv("../data/avocado.csv")
 
 # drop the columns that are not needed for the model
-not_needed = ["Unnamed: 0", "Date", "region"]
+not_needed = ["Index", "Date", "region"]
 df = df.drop(columns=not_needed, axis=1)
+
+# Add a volume per bag column
+df['VolumePerBag'] = df['TotalVolume'] / df['TotalBags']
+
+# remove rows that have 'inf' in the new column (because of division by zero)
+df = df.replace([float('inf')], pd.NA)
 
 # drop incomplete rows
 df = df.dropna()
