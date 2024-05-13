@@ -38,7 +38,15 @@ dfTest = pd.concat([dfTest.reset_index(drop=True), encoded_df_test], axis=1)
 dfTrain.drop(columns=['type'], inplace=True)
 dfTest.drop(columns=['type'], inplace=True)
 
+# Initialize the MinMaxScaler
+scaler = MinMaxScaler()
 
+# Fit the scaler on the training data
+scaler.fit_transform(dfTrain)
+
+# Transform the dataframes
+dfTrain[dfTrain.columns] = scaler.transform(dfTrain[dfTrain.columns])
+dfTest[dfTest.columns] = scaler.transform(dfTest[dfTest.columns])
 
 # save the dataframes to new pickle files
 dfTrain.to_pickle("../data/dfTrainMinMaxScaler.pickle")
