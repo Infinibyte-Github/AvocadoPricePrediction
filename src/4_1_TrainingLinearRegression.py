@@ -14,6 +14,10 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import r2_score
 import joblib
+import time
+
+# time the training
+start = time.time()
 
 # Load the scaled datasets
 dfTrain = pd.read_pickle('../data/dfTrainMinMaxScaler.pickle')
@@ -52,4 +56,8 @@ plt.axline((0, 0), slope=1)
 plt.xlabel('Actual')
 plt.ylabel('Predicted')
 plt.title('Actual vs. Predicted (Linear Regression)')
+plt.annotate(f"MSE = {mse:.4f}\nR2 = {r2:.2f}", xy=(0.1, 0.), xycoords='axes fraction')
 plt.show()
+
+# print the time it took to train the model
+print("Training time:", time.time() - start)
