@@ -15,6 +15,11 @@ from tensorflow.keras.layers import Dense, BatchNormalization, Dropout
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import TensorBoard
 import tensorflow as tf
+from sklearn.metrics import mean_squared_error, r2_score
+import time
+
+# time the training
+start = time.time()
 
 # read dataframes from pickle files
 dfTrain = pd.read_pickle("../data/dfTrainMinMaxScaler.pickle")
@@ -41,7 +46,7 @@ model = Sequential([
     Dense(64, activation='relu'),
     BatchNormalization(),
     Dropout(0.5),
-    Dense(1)  # No activation for regression
+    Dense(1)
 ])
 
 # Compile the model with appropriate loss function and optimizer
@@ -62,6 +67,14 @@ print('Test Loss:', test_loss)
 # Make predictions
 y_pred = model.predict(X_test)
 
+# Evaluate the model
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print("Mean Squared Error:", mse)
+print("R-squared:", r2)
+
+
 # Save the model
 model.save("../models/NeuralNetworkModel.keras")
 
@@ -75,4 +88,8 @@ plt.axline((0, 0), slope=1)
 plt.xlabel('Actual')
 plt.ylabel('Predicted')
 plt.title('Actual vs. Predicted (Neural Network)')
+plt.annotate(f"MSE = {mse:.4f}\nR2 = {r2:.2f}", xy=(0.1, 0.85), xycoords='axes fraction')
 plt.show()
+
+# print the time it took to train the model
+print("Training time:", time.time() - start)

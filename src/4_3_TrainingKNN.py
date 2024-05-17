@@ -15,6 +15,10 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import r2_score
 import joblib
+import time
+
+# time the training
+start = time.time()
 
 # Load the scaled datasets
 dfTrain = pd.read_pickle('../data/dfTrainMinMaxScaler.pickle')
@@ -75,3 +79,6 @@ plt.ylabel('Predicted')
 plt.title('Actual vs. Predicted (K-Nearest Neighbors)')
 plt.annotate(f"K = 3\nMSE = {mse:.4f}\nR2 = {r2:.2f}", xy=(0.1, 0.85), xycoords='axes fraction')
 plt.show()
+
+# print the time it took to train the model
+print("Training time:", time.time() - start)

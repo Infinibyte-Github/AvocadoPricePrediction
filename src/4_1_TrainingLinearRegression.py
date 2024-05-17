@@ -56,7 +56,7 @@ plt.axline((0, 0), slope=1)
 plt.xlabel('Actual')
 plt.ylabel('Predicted')
 plt.title('Actual vs. Predicted (Linear Regression)')
-plt.annotate(f"MSE = {mse:.4f}\nR2 = {r2:.2f}", xy=(0.1, 0.), xycoords='axes fraction')
+plt.annotate(f"MSE = {mse:.4f}\nR2 = {r2:.2f}", xy=(0.1, 0.85), xycoords='axes fraction')
 plt.show()
 
 # print the time it took to train the model
